@@ -1,12 +1,8 @@
-#!/usr/bin/env python3
-
 import unittest
 
 import numpy as np
 
-
-def depth_scan(depths) -> int:
-    return ((depths[1:] - depths[:-1]) > 0).sum()
+from depths import depth_scan
 
 
 class TestSonarSweep(unittest.TestCase):
@@ -15,5 +11,4 @@ class TestSonarSweep(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    depths = np.loadtxt('input.txt')
-    print(depth_scan(depths))
+    unittest.main()
