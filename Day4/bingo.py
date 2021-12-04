@@ -4,16 +4,16 @@ from typing import Generator
 import numpy as np
 
 
-def parse_input(lineiter: Generator):
-    calls = np.fromstring(next(lineiter), dtype=int, sep=',')
+def parse_input(line_iter: Generator):
+    calls = np.fromstring(next(line_iter), dtype=int, sep=',')
     boards = []
     while True:
         try:
-            next(lineiter)
+            next(line_iter)
         except StopIteration:
             break
         boards.append(BingoBoard.create_from_str(
-            '\n'.join(map(lambda _: next(lineiter), range(BingoBoard.BINGO_BOARD_SIDE_LENGTH)))))
+            '\n'.join(map(lambda _: next(line_iter), range(BingoBoard.BINGO_BOARD_SIDE_LENGTH)))))
     return calls, boards
 
 
@@ -49,18 +49,18 @@ class BingoBoard:
 
 
 # https://docs.python.org/3/library/itertools.html#itertools-recipes
-def partition(pred, iterable):
+def partition(predicate, iterable):
     """Use a predicate to partition entries into false entries and true entries"""
     # partition(is_odd, range(10)) --> 0 2 4 6 8   and  1 3 5 7 9
     t1, t2 = itertools.tee(iterable)
-    return itertools.filterfalse(pred, t1), filter(pred, t2)
+    return itertools.filterfalse(predicate, t1), filter(predicate, t2)
 
 
 def play_bingo(calls, boards):
     found_fastest_board = False
     slowest_board = None
 
-    for callnum, call in enumerate(calls):
+    for call_num, call in enumerate(calls):
         for board in boards:
             board.mark(call)
         losers, winners = map(list, partition(lambda x: x.has_bingo, boards))
@@ -68,7 +68,7 @@ def play_bingo(calls, boards):
         if any(winners) and not found_fastest_board:
             assert len(winners) == 1
             found_fastest_board = True
-            print(f"Part A: Fastest board won after round %d" % callnum)
+            print(f"Part A: Fastest board won after round %d" % call_num)
             print(winners[0].score_board() * call)
 
         if len(losers) == 1 and slowest_board is None:
@@ -76,7 +76,7 @@ def play_bingo(calls, boards):
 
         if slowest_board and slowest_board.has_bingo:
             print()
-            print(f"Part B: Slowest board won after round %d" % callnum)
+            print(f"Part B: Slowest board won after round %d" % call_num)
             print(slowest_board.score_board() * call)
             break
 
