@@ -9,31 +9,29 @@ def create_boolean_array(report: str) -> np.array:
     return np.array([np.array(list(map(lambda x: int(x), list(line)))) for line in report.split('\n')])
 
 
-def calculate_gamma_rate(report: str) -> int:
-    arr = create_boolean_array(report)
+def calculate_gamma_rate(report: np.array) -> int:
     bitstring = ''
-    for sum in arr.sum(axis=0):
-        assert sum != arr.shape[0] / 2
-        if sum > arr.shape[0] / 2:
+    for sum in report.sum(axis=0):
+        assert sum != report.shape[0] / 2
+        if sum > report.shape[0] / 2:
             bitstring += '1'
         else:
             bitstring += '0'
     return bitstring_to_int(bitstring)
 
 
-def calculate_epsilon_rate(report: str) -> int:
-    arr = create_boolean_array(report)
+def calculate_epsilon_rate(report: np.array) -> int:
     bitstring = ''
-    for sum in arr.sum(axis=0):
-        assert sum != arr.shape[0] / 2
-        if sum > arr.shape[0] / 2:
+    for sum in report.sum(axis=0):
+        assert sum != report.shape[0] / 2
+        if sum > report.shape[0] / 2:
             bitstring += '0'
         else:
             bitstring += '1'
     return bitstring_to_int(bitstring)
 
 
-def calculate_power_consumption(report: str) -> int:
+def calculate_power_consumption(report: np.array) -> int:
     return calculate_gamma_rate(report) * calculate_epsilon_rate(report)
 
 
@@ -75,10 +73,10 @@ def get_frequency_dict(report: np.array, bitposition: int) -> dict:
 
 if __name__ == '__main__':
     with open('input.txt') as f:
-        report = f.read()
+        report = create_boolean_array(f.read())
 
     print("Part 1")
     print(calculate_power_consumption(report))
     print()
     print("Part 2")
-    print(calculate_life_support_rating(create_boolean_array(report)))
+    print(calculate_life_support_rating(report))
