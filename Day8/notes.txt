@@ -1,0 +1,41 @@
+ abcdefg
+0abc efg
+1  c  f
+2a cde g
+3a cd fg
+4 bcd f
+5ab d fg
+6ab defg
+7a c  f
+8abcdefg
+9abcd fg
+ 8687497
+
+e: 4 occurences
+b: 6 occurences
+c: 8 occurences, and present in the 2-tuple
+a: 8 occurences, and not present in the 2-tuple
+d: 7 occurences, and present in the 4-tuple
+g: 7 occurences, and not present in the 4-tuple
+f: 9 occurences
+
+a = 7 - 1
+
+1: 2 segments
+7: 3 segments
+4: 4 segments
+2: 5 segments
+3: 5 segments
+5: 5 segments
+0: 6 segments
+6: 6 segments
+9: 6 segments
+8: 7 segments (no info)
+
+3 5 segments will have:
+    3 in common (adg)
+    2 represented once (b and e), in the 2 and 5
+    2 represented twice (c and f), in the 3. this is a superset of the 1
+
+3x 6 segments will have:
+    1 missing each of c, d, e
