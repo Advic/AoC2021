@@ -61,7 +61,7 @@ def score_incomplete_lines(lines: List[str]) -> int:
             line_total += score_map[open_close_map[chr]]
         scores.append(line_total)
     scores.sort()
-    return scores[int(len(scores) / 2)]
+    return scores[len(scores) // 2]
 
 
 if __name__ == '__main__':
